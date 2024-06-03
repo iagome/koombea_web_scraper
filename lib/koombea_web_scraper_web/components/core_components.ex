@@ -17,6 +17,7 @@ defmodule KoombeaWebScraperWeb.CoreComponents do
   use Phoenix.Component
 
   import KoombeaWebScraperWeb.Gettext
+  import KoombeaWebScraperWeb.LinkHelpers
 
   alias Phoenix.HTML.Form
   alias Phoenix.LiveView.JS
@@ -464,6 +465,8 @@ defmodule KoombeaWebScraperWeb.CoreComponents do
     default: &Function.identity/1,
     doc: "the function for mapping each row before calling the :col and :action slots"
 
+  attr :navigate, :string, default: ""
+
   slot :col, required: true do
     attr :label, :string
   end
@@ -494,15 +497,17 @@ defmodule KoombeaWebScraperWeb.CoreComponents do
         >
           <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-zinc-50">
             <td
-              :for={{col, i} <- Enum.with_index(@col)}
+              :for={{col, _i} <- Enum.with_index(@col)}
               phx-click={@row_click && @row_click.(row)}
               class={["relative p-0", @row_click && "hover:cursor-pointer"]}
             >
               <div class="block py-4 pr-6">
-                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-zinc-50 sm:rounded-l-xl" />
-                <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
+                <.link
+                  navigate={create_target_url(row)}
+                  class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
+                >
                   <%= render_slot(col, @row_item.(row)) %>
-                </span>
+                </.link>
               </div>
             </td>
             <td :if={@action != []} class="relative w-14 p-0">
