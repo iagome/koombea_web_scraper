@@ -1,8 +1,8 @@
 defmodule KoombeaWebScraperWeb.UserConfirmationInstructionsLiveTest do
   use KoombeaWebScraperWeb.ConnCase, async: true
 
-  import Phoenix.LiveViewTest
   import KoombeaWebScraper.AccountsFixtures
+  import Phoenix.LiveViewTest
 
   alias KoombeaWebScraper.Accounts
   alias KoombeaWebScraper.Repo
