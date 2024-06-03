@@ -9,6 +9,16 @@ defmodule KoombeaWebScraper.Websites.Website do
 
   alias KoombeaWebScraper.Accounts.User
 
+  @type t :: %__MODULE__{
+          id: integer(),
+          inserted_at: NaiveDateTime.t(),
+          updated_at: NaiveDateTime.t(),
+          url: String.t(),
+          name: String.t(),
+          total_links: integer(),
+          user_id: integer()
+        }
+
   @required_fields ~w(user_id)a
   @optional_fields ~w(url name total_links)a
 

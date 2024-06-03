@@ -9,6 +9,15 @@ defmodule KoombeaWebScraper.Websites.WebsiteComponent do
 
   alias KoombeaWebScraper.Websites.Website
 
+  @type t :: %__MODULE__{
+          id: integer(),
+          inserted_at: NaiveDateTime.t(),
+          updated_at: NaiveDateTime.t(),
+          url: String.t(),
+          name: String.t(),
+          website_id: integer()
+        }
+
   @required_fields ~w(url name user_id)a
 
   schema "website_components" do
