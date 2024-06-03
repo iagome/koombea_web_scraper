@@ -13,6 +13,7 @@ defmodule KoombeaWebScraper.UrlsScraper do
 
   defp parse_page_title!(body) do
     body
+    |> Floki.parse_document!()
     |> Floki.find("title")
     |> Floki.text()
   end
