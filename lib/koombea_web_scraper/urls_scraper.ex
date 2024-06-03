@@ -16,7 +16,8 @@ defmodule KoombeaWebScraper.UrlsScraper do
         iex> scrape_and_parse_url(bad_url)
         {:error, :error_fetching_url}
   """
-  @spec scrape_and_parse_url(String.t()) :: {:ok, String.t(), list()} | {:error, :error_fetching_url} | any()
+  @spec scrape_and_parse_url(String.t()) ::
+          {:ok, String.t(), list()} | {:error, :error_fetching_url} | any()
   def scrape_and_parse_url(url) do
     with %HTTPoison.Response{status_code: 200, body: body} <- Crawly.fetch(url),
          page_title <- parse_page_title!(body),
@@ -24,7 +25,10 @@ defmodule KoombeaWebScraper.UrlsScraper do
       {:ok, page_title, components}
     else
       %HTTPoison.Response{status_code: status, body: body} ->
-        Logger.error("#{__MODULE__} - Error fetching URL with status code: #{inspect(status)} and reason: #{inspect(body)}")
+        Logger.error(
+          "#{__MODULE__} - Error fetching URL with status code: #{inspect(status)} and reason: #{inspect(body)}"
+        )
+
         {:error, :error_fetching_url}
 
       error ->
