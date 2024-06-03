@@ -61,6 +61,7 @@ defmodule KoombeaWebScraperWeb.Router do
     live_session :require_authenticated_user,
       on_mount: [{KoombeaWebScraperWeb.UserAuth, :ensure_authenticated}] do
       live "/", HomeLive, :home
+      live "/details/:website_id", WebsiteComponentsLive, :components
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
