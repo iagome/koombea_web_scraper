@@ -1,9 +1,9 @@
 defmodule KoombeaWebScraper.AccountsTest do
   use KoombeaWebScraper.DataCase
 
-  alias KoombeaWebScraper.Accounts
-
   import KoombeaWebScraper.AccountsFixtures
+
+  alias KoombeaWebScraper.Accounts
   alias KoombeaWebScraper.Accounts.{User, UserToken}
 
   describe "get_user_by_email/1" do
@@ -63,7 +63,7 @@ defmodule KoombeaWebScraper.AccountsTest do
 
       assert %{
                email: ["must have the @ sign and no spaces"],
-               password: ["should be at least 12 character(s)"]
+               password: ["should be at least 10 character(s)"]
              } = errors_on(changeset)
     end
 
@@ -267,7 +267,7 @@ defmodule KoombeaWebScraper.AccountsTest do
         })
 
       assert %{
-               password: ["should be at least 12 character(s)"],
+               password: ["should be at least 10 character(s)"],
                password_confirmation: ["does not match password"]
              } = errors_on(changeset)
     end
@@ -476,7 +476,7 @@ defmodule KoombeaWebScraper.AccountsTest do
         })
 
       assert %{
-               password: ["should be at least 12 character(s)"],
+               password: ["should be at least 10 character(s)"],
                password_confirmation: ["does not match password"]
              } = errors_on(changeset)
     end
