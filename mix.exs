@@ -35,6 +35,8 @@ defmodule KoombeaWebScraper.MixProject do
       {:bandit, "~> 1.2"},
       {:bcrypt_elixir, "~> 3.0"},
       {:crawly, "~> 0.17.0"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev], runtime: false},
       {:dns_cluster, "~> 0.1.1"},
       {:ecto_sql, "~> 3.10"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
@@ -75,6 +77,7 @@ defmodule KoombeaWebScraper.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      quality: ["format --check-formatted", "credo --strict", "dialyzer"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind koombea_web_scraper", "esbuild koombea_web_scraper"],
       "assets.deploy": [
