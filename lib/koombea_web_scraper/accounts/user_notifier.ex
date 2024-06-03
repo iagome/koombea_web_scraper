@@ -1,4 +1,8 @@
 defmodule KoombeaWebScraper.Accounts.UserNotifier do
+  @moduledoc """
+  Mailer for user actions
+  """
+
   import Swoosh.Email
 
   alias KoombeaWebScraper.Mailer

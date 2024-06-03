@@ -1,4 +1,8 @@
 defmodule KoombeaWebScraper.Websites.WebsiteComponent do
+  @moduledoc """
+  Website component schema
+  """
+
   use Ecto.Schema
 
   import Ecto.Changeset

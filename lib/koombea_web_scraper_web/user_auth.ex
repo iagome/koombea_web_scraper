@@ -1,8 +1,12 @@
 defmodule KoombeaWebScraperWeb.UserAuth do
+  @moduledoc """
+  User authentication for LiveView
+  """
+
   use KoombeaWebScraperWeb, :verified_routes
 
-  import Plug.Conn
   import Phoenix.Controller
+  import Plug.Conn
 
   alias KoombeaWebScraper.Accounts
 

@@ -1,4 +1,8 @@
 defmodule KoombeaWebScraper.Accounts.UserToken do
+  @moduledoc """
+  User token schema
+  """
+
   use Ecto.Schema
   import Ecto.Query
   alias KoombeaWebScraper.Accounts.UserToken
