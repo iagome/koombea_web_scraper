@@ -26,6 +26,7 @@ defmodule KoombeaWebScraper.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import KoombeaWebScraper.DataCase
+      import KoombeaWebScraper.Factory
     end
   end
 

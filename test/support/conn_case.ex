@@ -28,6 +28,7 @@ defmodule KoombeaWebScraperWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import KoombeaWebScraperWeb.ConnCase
+      import KoombeaWebScraper.Factory
     end
   end
 
