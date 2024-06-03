@@ -1,8 +1,8 @@
 defmodule KoombeaWebScraperWeb.HomeLive do
   use KoombeaWebScraperWeb, :live_view
 
-  alias KoombeaWebScraper.Websites.Website
   alias KoombeaWebScraper.Websites
+  alias KoombeaWebScraper.Websites.Website
 
   def render(assigns) do
     ~H"""
@@ -10,12 +10,7 @@ defmodule KoombeaWebScraperWeb.HomeLive do
       Web Scraper
       <:subtitle>Scrape any pages on the web for Links</:subtitle>
     </.header>
-    <.simple_form
-      for={@form}
-      id="scrape_website_form"
-      phx-submit="scrape"
-      phx-change="validate"
-    >
+    <.simple_form for={@form} id="scrape_website_form" phx-submit="scrape" phx-change="validate">
       <.input field={@form[:url]} type="text" label="URL" required />
       <:actions>
         <.button phx-disable-with="Scraping..." class="w-full">
@@ -43,8 +38,11 @@ defmodule KoombeaWebScraperWeb.HomeLive do
 
   def handle_event("validate", %{"website" => %{"url" => url}}, socket) do
     case Website.validate_url_changeset(%Website{}, %{url: url}) do
-      %Ecto.Changeset{valid?: true} = changeset -> {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
-      changeset -> {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
+      %Ecto.Changeset{valid?: true} = changeset ->
+        {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
+
+      changeset ->
+        {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
     end
   end
 
@@ -52,9 +50,9 @@ defmodule KoombeaWebScraperWeb.HomeLive do
     Websites.create(url, socket.assigns.current_user.id)
 
     {:noreply,
-      socket
-      |> put_flash(:info, "URL is being scraped")
-      |> redirect(to: ~p"/")}
+     socket
+     |> put_flash(:info, "URL is being scraped")
+     |> redirect(to: ~p"/")}
   end
 
   defp assign_form(socket, %{} = source) do

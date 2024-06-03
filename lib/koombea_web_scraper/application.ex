@@ -10,7 +10,8 @@ defmodule KoombeaWebScraper.Application do
     children = [
       KoombeaWebScraperWeb.Telemetry,
       KoombeaWebScraper.Repo,
-      {DNSCluster, query: Application.get_env(:koombea_web_scraper, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:koombea_web_scraper, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: KoombeaWebScraper.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: KoombeaWebScraper.Finch},

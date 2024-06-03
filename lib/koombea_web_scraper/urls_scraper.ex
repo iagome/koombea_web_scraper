@@ -32,7 +32,7 @@ defmodule KoombeaWebScraper.UrlsScraper do
   defp sanitize_name!(name) do
     name
     |> String.trim()
-    |> String.split(" ",trim: true)
+    |> String.split(" ", trim: true)
     |> Enum.join(" ")
     |> String.replace("\n", "")
   end
