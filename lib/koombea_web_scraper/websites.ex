@@ -2,6 +2,7 @@ defmodule KoombeaWebScraper.Websites do
   @moduledoc """
   Context for the websites schema
   """
+  import Ecto.Query
 
   alias KoombeaWebScraper.Repo
   alias KoombeaWebScraper.UrlsScraper
@@ -22,13 +23,16 @@ defmodule KoombeaWebScraper.Websites do
          sanitized_components <- sanitize_website_components(components, url),
          attrs <- build_attrs(url, user_id, page_title, length(sanitized_components)),
          {:ok, website} <- create_website(attrs),
-         {_created_components, nil} <- WebsiteComponents.create(sanitized_components, website.id) do
+         {_created_components, nil} <-
+           WebsiteComponents.batch_create(sanitized_components, website.id) do
       :ok
     end
   end
 
   defp sanitize_website_components(components, base_url) do
-    Enum.flat_map(components, &sanitize_component(&1, base_url))
+    components
+    |> Enum.map(&sanitize_component(&1, base_url))
+    |> Enum.reject(&Enum.empty?(&1))
   end
 
   defp sanitize_component(%{url: ""}, _base_url), do: []
@@ -60,5 +64,39 @@ defmodule KoombeaWebScraper.Websites do
     %Website{}
     |> Website.changeset(attrs)
     |> Repo.insert()
+  end
+
+  @doc """
+  Get all websites by an user ID
+
+  ## Examples
+
+      iex> get_by_user_id(123)
+      [%Website{}, %Website{}]
+
+      iex> get_by_user_id(9999)
+      []
+  """
+  @spec get_by_user_id(integer()) :: [Website.t()] | []
+  def get_by_user_id(user_id) do
+    Website
+    |> where([w], w.user_id == ^user_id)
+    |> Repo.all()
+  end
+
+  @doc """
+  Get a website by its ID
+
+  ## Examples
+
+      iex> get(123)
+      %Website{}
+
+      iex> get(9999)
+      nil
+  """
+  @spec get(integer()) :: Website.t() | nil
+  def get(id) do
+    Repo.get(Website, id)
   end
 end
