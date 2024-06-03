@@ -1,10 +1,11 @@
 defmodule KoombeaWebScraperWeb.UserAuthTest do
   use KoombeaWebScraperWeb.ConnCase, async: true
 
-  alias Phoenix.LiveView
+  import KoombeaWebScraper.AccountsFixtures
+
   alias KoombeaWebScraper.Accounts
   alias KoombeaWebScraperWeb.UserAuth
-  import KoombeaWebScraper.AccountsFixtures
+  alias Phoenix.LiveView
 
   @remember_me_cookie "_koombea_webscrapper_web_user_remember_me"
 
