@@ -47,12 +47,19 @@ defmodule KoombeaWebScraperWeb.HomeLive do
   end
 
   def handle_event("scrape", %{"website" => %{"url" => url}}, socket) do
-    Websites.create(url, socket.assigns.current_user.id)
+    case Websites.create(url, socket.assigns.current_user.id) do
+      :ok ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "URL has been scraped")
+         |> redirect(to: ~p"/")}
 
-    {:noreply,
-     socket
-     |> put_flash(:info, "URL has been scraped")
-     |> redirect(to: ~p"/")}
+      _error ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "An error occurred")
+         |> redirect(to: ~p"/")}
+    end
   end
 
   defp assign_form(socket, %{} = source) do
