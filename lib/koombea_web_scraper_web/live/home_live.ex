@@ -31,9 +31,9 @@ defmodule KoombeaWebScraperWeb.HomeLive do
     form_source = Website.changeset(%Website{}, attrs)
 
     form = to_form(form_source)
-    website = [%{name: "Teste", total_links: 12}]
+    websites = Websites.get_by_user_id(socket.assigns.current_user.id)
 
-    {:ok, assign(socket, form: form, websites: website)}
+    {:ok, assign(socket, form: form, websites: websites)}
   end
 
   def handle_event("validate", %{"website" => %{"url" => url}}, socket) do
@@ -51,7 +51,7 @@ defmodule KoombeaWebScraperWeb.HomeLive do
 
     {:noreply,
      socket
-     |> put_flash(:info, "URL is being scraped")
+     |> put_flash(:info, "URL has been scraped")
      |> redirect(to: ~p"/")}
   end
 
