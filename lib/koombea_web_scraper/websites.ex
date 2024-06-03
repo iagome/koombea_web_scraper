@@ -17,7 +17,7 @@ defmodule KoombeaWebScraper.Websites do
       iex> create("https://google.com", 123)
       :ok
   """
-  @spec create(String.t(), integer()) :: :ok
+  @spec create(String.t(), integer()) :: :ok | {:error, String.t()}
   def create(url, user_id) do
     with {:ok, page_title, components} <- UrlsScraper.scrape_and_parse_url(url),
          sanitized_components <- sanitize_website_components(components, url),
@@ -43,7 +43,7 @@ defmodule KoombeaWebScraper.Websites do
       String.starts_with?(url, "/") ->
         %{component | url: base_url <> url}
 
-      String.starts_with?(url, "https") ->
+      String.starts_with?(url, "http") ->
         component
 
       true ->
