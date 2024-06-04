@@ -5,7 +5,7 @@ defmodule KoombeaWebScraper.Repo.Migrations.CreateWebsiteComponentsTable do
     create table("website_components") do
       timestamps()
 
-      add :url, :string
+      add :url, :string, size: 511
       add :name, :string
       add :website_id, references(:websites)
     end
