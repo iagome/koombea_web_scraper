@@ -31,14 +31,16 @@ defmodule KoombeaWebScraperWeb.HomeLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    attrs = %{user_id: socket.assigns.current_user.id, url: ""}
+    current_user_id = socket.assigns.current_user.id
+
+    attrs = %{user_id: current_user_id, url: ""}
 
     form =
       %Website{}
       |> Website.changeset(attrs)
       |> to_form()
 
-    websites = Websites.get_by_user_id(socket.assigns.current_user.id)
+    websites = Websites.get_by_user_id(current_user_id)
 
     {:ok, assign(socket, form: form, websites: websites)}
   end
@@ -64,15 +66,13 @@ defmodule KoombeaWebScraperWeb.HomeLive do
   end
 
   @impl true
-  def handle_async(:scrape_url, {:ok, res}, socket) do
-    %{async_result: async_result} = socket.assigns
-    {:ok, website} = res
-    %{websites: websites} = socket.assigns
-    new_websites = websites ++ [website]
+  def handle_async(:scrape_url, {:ok, {:ok, website}}, %{assigns: assigns} = socket) do
+    %{async_result: async_result, websites: websites} = assigns
 
     {:noreply,
      socket
-     |> assign(:websites, new_websites)
+     |> assign(:websites, [website | websites])
+     |> put_flash(:info, "The URL has been scraped")
      |> assign(:async_result, AsyncResult.ok(async_result, website))}
   end
 
