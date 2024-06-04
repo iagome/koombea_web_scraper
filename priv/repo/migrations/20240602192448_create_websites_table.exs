@@ -10,5 +10,7 @@ defmodule KoombeaWebScraper.Repo.Migrations.CreateWebsitesTable do
       add :total_links, :integer
       add :user_id, references(:users)
     end
+
+    create index(:websites, [:user_id])
   end
 end

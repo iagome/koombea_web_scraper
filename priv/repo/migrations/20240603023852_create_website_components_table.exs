@@ -9,5 +9,7 @@ defmodule KoombeaWebScraper.Repo.Migrations.CreateWebsiteComponentsTable do
       add :name, :string
       add :website_id, references(:websites)
     end
+
+    create index(:website_components, [:website_id])
   end
 end
