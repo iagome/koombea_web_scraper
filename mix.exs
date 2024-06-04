@@ -52,7 +52,7 @@ defmodule KoombeaWebScraper.MixProject do
        compile: false,
        depth: 1},
       {:jason, "~> 1.2"},
-      {:mimic, "~> 1.7.4"},
+      {:mimic, "~> 1.7.4", only: [:test]},
       {:phoenix, "~> 1.7.12"},
       {:phoenix_ecto, "~> 4.4"},
       {:phoenix_html, "~> 4.0"},
