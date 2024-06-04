@@ -1,9 +1,13 @@
 defmodule KoombeaWebScraperWeb.HomeLive do
   use KoombeaWebScraperWeb, :live_view
+  use Phoenix.Component
 
   alias KoombeaWebScraper.Websites
   alias KoombeaWebScraper.Websites.Website
 
+  alias Phoenix.LiveView.AsyncResult
+
+  @impl true
   def render(assigns) do
     ~H"""
     <.header class="text-center">
@@ -25,12 +29,15 @@ defmodule KoombeaWebScraperWeb.HomeLive do
     """
   end
 
+  @impl true
   def mount(_params, _session, socket) do
     attrs = %{user_id: socket.assigns.current_user.id, url: ""}
 
-    form_source = Website.changeset(%Website{}, attrs)
+    form =
+      %Website{}
+      |> Website.changeset(attrs)
+      |> to_form()
 
-    form = to_form(form_source)
     websites = Websites.get_by_user_id(socket.assigns.current_user.id)
 
     {:ok, assign(socket, form: form, websites: websites)}
@@ -46,20 +53,33 @@ defmodule KoombeaWebScraperWeb.HomeLive do
     end
   end
 
+  @impl true
   def handle_event("scrape", %{"website" => %{"url" => url}}, socket) do
-    case Websites.create(url, socket.assigns.current_user.id) do
-      :ok ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "URL has been scraped")
-         |> redirect(to: ~p"/")}
+    current_user_id = socket.assigns.current_user.id
 
-      _error ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "An error occurred")
-         |> redirect(to: ~p"/")}
-    end
+    {:noreply,
+     socket
+     |> assign(:async_result, AsyncResult.loading())
+     |> start_async(:scrape_url, fn -> Websites.create(url, current_user_id) end)}
+  end
+
+  @impl true
+  def handle_async(:scrape_url, {:ok, res}, socket) do
+    %{async_result: async_result} = socket.assigns
+    {:ok, website} = res
+    %{websites: websites} = socket.assigns
+    new_websites = websites ++ [website]
+
+    {:noreply,
+     socket
+     |> assign(:websites, new_websites)
+     |> assign(:async_result, AsyncResult.ok(async_result, website))}
+  end
+
+  @impl true
+  def handle_async(:scrape_url, {:exit, reason}, socket) do
+    %{async_result: async_result} = socket.assigns
+    {:noreply, assign(socket, :websites, AsyncResult.failed(async_result, {:exit, reason}))}
   end
 
   defp assign_form(socket, %{} = source) do
