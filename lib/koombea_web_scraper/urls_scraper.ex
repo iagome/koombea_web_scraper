@@ -50,8 +50,8 @@ defmodule KoombeaWebScraper.UrlsScraper do
     |> Floki.find("a")
     |> Enum.map(fn tag ->
       %{
-        url: Floki.attribute(tag, "href") |> Floki.text(),
-        name: Floki.text(tag) |> sanitize_name!()
+        url: tag |> Floki.attribute("href") |> Floki.text(),
+        name: tag |> Floki.text() |> sanitize_name!()
       }
     end)
   end
