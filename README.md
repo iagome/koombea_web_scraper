@@ -124,4 +124,6 @@ Finally, we can have as many scraped websites as we like:
 - Having a `.env` file to work with environment variables safer;
 - Add a CI/CD pipeline to prevent faulty code and errors going to production;
 - Have a pagination solution using Scrivener at first, to improve performance. And as the project grows, it would be nice to have a pagination using cursors, since using Scrivener can become slow if there are too many data in the database;
-- See the pages that are still being scraped on the table, instead of using the <.table> live view element, create a <table> with the HTML syntax and run throw rows manually, therefore giving the developer more flexibility.
+- See the pages that are still being scraped on the table, instead of using the <.table> live view element, create a <table> with the HTML syntax and run throw rows manually, therefore giving the developer more flexibility;
+- To have a more robust and fail-proof system, it would be nice to have a solution that retries URLs that have got an error. Something like Oban to handle the requests asynchronously and have a retry solution that you can manage as you want;
+- The design solution for the `website_components` is simple and focused on the problem that we have right now. If the system would grow, it would be a good idea to have a more generic solution for this table, have generic columns with a `type` column that would say what kind of column it's saving at that moment.
