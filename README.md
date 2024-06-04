@@ -10,7 +10,7 @@ A Web Scraping solution with login and a minimalist Front-end that enables you t
 
 ## Tools
 
-- [mix phx.gen.auth](https://hexdocs.pm/phoenix/mix_phx_gen_auth.html) to generate the authentication files;
+- [mix phx.gen.auth](https://hexdocs.pm/phoenix/mix_phx_gen_auth.html) to generate the authentication solution and needed files;
 - [Crawly](https://github.com/elixir-crawly/crawly) for the web scraping;
 - [Floki](https://github.com/philss/floki) to parse HTML pages;
 - [Credo](https://github.com/rrrene/credo) for static code analysis (syntax);
@@ -92,7 +92,7 @@ Here we have a few different elements:
 - The scrape button, to start the scraping process;
 - The (still empty) table with all the websites you scraped and how many links it found on that website.
 
-Now, let's say you want to scrape the Elixir page on Wikipedia. As you start typing the URL on the field, it will say that the URL is not valid, since there is a validation for valid URLs, that runs on every character you type on the field, and it only vanished when the URL is valid.
+Now, let's say you want to scrape the Elixir page on Wikipedia. As you start typing the URL on the field, it will say that the URL is not valid, since there is a validation for valid URLs, that runs on every character you type on the field, and it only vanishes when the URL is valid.
 
 ![invalid-url](https://github.com/iagome/koombea_web_scraper/assets/26315886/8d0f4b74-7913-4b95-ac50-e56355e4bd1e)
 
@@ -112,9 +112,9 @@ With that, we can even click on any link on this page to be redirected to that l
 
 ![click-on-scraped-link](https://github.com/iagome/koombea_web_scraper/assets/26315886/9eb5578d-1241-42cf-bfaf-b806ffa01a9c)
 
-There is also a `Back` button on the left top corner of the table, which we can use to return to the home page and scrape more pages for links.
+There is also a `Back` button on the top left corner of the table, which we can use to return to the home page and scrape more pages for links.
 
-Finally, we can have as many scraped websites and we'd like:
+Finally, we can have as many scraped websites as we like:
 
 ![final-scrapes](https://github.com/iagome/koombea_web_scraper/assets/26315886/657e9e0a-c4e9-466b-b0f4-2abb5436c837)
 
