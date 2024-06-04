@@ -18,9 +18,7 @@ defmodule KoombeaWebScraper.WebsitesTest do
         {:ok, "Google", scrape_n_sanitized_fixture()}
       end)
 
-      assert :ok = Websites.create(url, user.id)
-
-      [website] = Websites.get_by_user_id(user.id)
+      assert {:ok, website} = Websites.create(url, user.id)
 
       assert website.total_links == 3
       assert website.url == url
@@ -36,9 +34,7 @@ defmodule KoombeaWebScraper.WebsitesTest do
         {:ok, "Github", scrape_unsanitized_fixture()}
       end)
 
-      assert :ok = Websites.create(url, user.id)
-
-      [website] = Websites.get_by_user_id(user.id)
+      assert {:ok, website} = Websites.create(url, user.id)
 
       assert website.total_links == 3
       assert website.url == url
@@ -54,9 +50,7 @@ defmodule KoombeaWebScraper.WebsitesTest do
         {:ok, "Github", scrape_empty_data_fixture()}
       end)
 
-      assert :ok = Websites.create(url, user.id)
-
-      [website] = Websites.get_by_user_id(user.id)
+      assert {:ok, website} = Websites.create(url, user.id)
 
       assert website.total_links == 1
       assert website.url == url
@@ -72,9 +66,7 @@ defmodule KoombeaWebScraper.WebsitesTest do
         {:ok, "Github", scrape_invalid_data_fixture()}
       end)
 
-      assert :ok = Websites.create(url, user.id)
-
-      [website] = Websites.get_by_user_id(user.id)
+      assert {:ok, website} = Websites.create(url, user.id)
 
       assert website.total_links == 0
       assert website.url == url
@@ -90,9 +82,7 @@ defmodule KoombeaWebScraper.WebsitesTest do
         {:ok, "Github", []}
       end)
 
-      assert :ok = Websites.create(url, user.id)
-
-      [website] = Websites.get_by_user_id(user.id)
+      assert {:ok, website} = Websites.create(url, user.id)
 
       assert website.total_links == 0
       assert website.url == url
