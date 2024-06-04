@@ -25,7 +25,7 @@ defmodule KoombeaWebScraper.Websites do
          {:ok, website} <- create_website(attrs),
          {_created_components, nil} <-
            WebsiteComponents.batch_create(sanitized_components, website.id) do
-      :ok
+      {:ok, website}
     end
   end
 
