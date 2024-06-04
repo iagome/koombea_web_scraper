@@ -32,6 +32,4 @@ defmodule KoombeaWebScraperWeb.HomeLiveTest do
                lv
     end
   end
-
-  # describe "Scrape a website"do
 end
